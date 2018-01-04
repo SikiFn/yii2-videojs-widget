@@ -7,6 +7,7 @@
 
 namespace wbraganca\videojs;
 
+use Yii;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\base\InvalidConfigException;
@@ -38,6 +39,9 @@ class VideoJsWidget extends \yii\base\Widget
     public function init()
     {
         parent::init();
+        
+        Yii::setAlias('@videojs', dirname(__FILE__));
+        
         $this->initOptions();
         $this->registerAssets();
     }
@@ -60,6 +64,7 @@ class VideoJsWidget extends \yii\base\Widget
         $view = $this->getView();
         VideoJsAsset::register($view);
         VideoJsYoutubeAsset::register($view);
+        VideoJsVastAsset::register($view);
 
         echo "\n" . Html::beginTag('video', $this->options);
         if (!empty($this->tags) && is_array($this->tags)) {
